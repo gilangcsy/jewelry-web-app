@@ -2,8 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const multer = require('multer');
+const forms = multer();
+
 //Memanggil model
-// const db = require('./app/models');
+const db = require('./app/models');
 
 //Deklarasi express.js
 const app = express();
@@ -25,10 +28,11 @@ const app = express();
 // }
 
 app.use(bodyParser.json());
+app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Migrasi tabel yang ada dalam setiap model
-// db.sequelize.sync({ force: false });
+// Migrasi tabel yang ada dalam setiap model
+db.sequelize.sync({ force: false });
 
 //Inisasi routing pada halaman awal
 app.get('/', (req, res) => {
@@ -38,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 
-// require('./app/routes/weapon.routes')(app);
+require('./app/routes/auth.routes')(app);
 // require('./app/routes/role.routes')(app);
 // require('./app/routes/hero.routes')(app);
 // require('./app/routes/skill.routes')(app);
