@@ -26,7 +26,7 @@ db.sequelize = sequelize;
 db.user = require('./user.model')(sequelize, Sequelize);
 db.role = require('./role.model')(sequelize, Sequelize);
 
-db.role.hasOne(db.user);
+db.role.hasMany(db.user);
 db.user.belongsTo(db.role);
 
 module.exports = db;

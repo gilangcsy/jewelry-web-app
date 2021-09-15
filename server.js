@@ -11,6 +11,8 @@ const db = require('./app/models');
 //Deklarasi express.js
 const app = express();
 
+const bcrypt = require("bcrypt");
+
 //Membuat daftar web yang dapat mengonsumsi ValorantPI
 // let whiteList = [
 //     'http://localhost:8081'
@@ -41,6 +43,44 @@ app.get('/', (req, res) => {
     });
 });
 
+//Membuat migrasi role dan user
+app.post('/migration', (req, res) => {
+    const db = require('./app/models');
+    const User = db.user;
+    const Role = db.role;
+
+    const role = {
+        roleName: "Admin"
+    }
+
+    Role.create(role)
+        .then((data) => {
+            const hashedPassword = bcrypt.hashSync("password", 10);
+            const user = {
+                fullName: "Gilang Chandra Syahputra",
+                username: "gilangcsy",
+                email: "gilangchandra9@gmail.com",
+                password: hashedPassword,
+                roleID: 1
+            }
+
+            User.create(user)
+                .then((data) => {
+                    res.send(data)
+                }).catch((err) => {
+                    res.status(500).send({
+                        message: err.message || 'Some error occured while creating user.'
+                    })
+                })
+        }).catch((err) => {
+            res.status(500).send({
+                message: err.message || 'Some error occured while creating user.'
+            })
+        })
+});
+
+
+app.use('/uploads', express.static('uploads'));
 
 require('./app/routes/auth.routes')(app);
 // require('./app/routes/role.routes')(app);
