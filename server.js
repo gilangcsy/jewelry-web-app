@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const multer = require('multer');
-const forms = multer();
+// const multer = require('multer');
+// const forms = multer();
 
 //Memanggil model
 const db = require('./app/models');
@@ -30,7 +30,7 @@ const bcrypt = require("bcrypt");
 // }
 
 app.use(bodyParser.json());
-app.use(forms.array());
+// app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Migrasi tabel yang ada dalam setiap model
@@ -83,7 +83,7 @@ app.post('/migration', (req, res) => {
 app.use('/uploads', express.static('uploads'));
 
 require('./app/routes/auth.routes')(app);
-// require('./app/routes/role.routes')(app);
+require('./app/routes/product.routes')(app);
 // require('./app/routes/hero.routes')(app);
 // require('./app/routes/skill.routes')(app);
 // require('./app/routes/map.routes')(app);

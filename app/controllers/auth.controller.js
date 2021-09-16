@@ -7,7 +7,7 @@ const config = require("../config/auth.config");
 
 
 exports.createUser = (req, res) => {
-    if (!req.body.email || !req.body.username || !req.body.password || !req.body.roleID) {
+    if (!req.body.email || !req.body.username || !req.body.password || !req.body.roleId || !req.body.fullName) {
         res.status(400).send({
             message: "Content cannot be empty!"
         });
@@ -16,10 +16,11 @@ exports.createUser = (req, res) => {
         const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
         const user = {
+            fullName: req.body.fullName,
             username: req.body.username,
             email: req.body.email,
             password: hashedPassword,
-            roleID: 1
+            roleId: 1
         }
 
         User.create(user)

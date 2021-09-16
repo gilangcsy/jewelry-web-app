@@ -25,8 +25,13 @@ db.sequelize = sequelize;
 //Memanggil model-model yang sudah dibuat
 db.user = require('./user.model')(sequelize, Sequelize);
 db.role = require('./role.model')(sequelize, Sequelize);
+db.product = require('./product.model')(sequelize, Sequelize);
+db.warehouse = require('./warehouse.model')(sequelize, Sequelize);
 
 db.role.hasMany(db.user);
 db.user.belongsTo(db.role);
+
+db.product.hasOne(db.warehouse);
+db.warehouse.belongsTo(db.product);
 
 module.exports = db;
