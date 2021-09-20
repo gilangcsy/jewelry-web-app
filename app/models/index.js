@@ -27,11 +27,18 @@ db.user = require('./user.model')(sequelize, Sequelize);
 db.role = require('./role.model')(sequelize, Sequelize);
 db.product = require('./product.model')(sequelize, Sequelize);
 db.warehouse = require('./warehouse.model')(sequelize, Sequelize);
+db.cart = require('./cart.model')(sequelize, Sequelize);
 
 db.role.hasMany(db.user);
 db.user.belongsTo(db.role);
 
-db.product.hasOne(db.warehouse);
-db.warehouse.belongsTo(db.product);
+// db.product.hasOne(db.warehouse);
+// db.warehouse.belongsTo(db.product);
+
+db.user.hasMany(db.cart);
+db.cart.belongsTo(db.user);
+
+db.product.hasMany(db.cart);
+db.cart.belongsTo(db.product);
 
 module.exports = db;
