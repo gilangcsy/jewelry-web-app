@@ -84,6 +84,7 @@ app.use('/uploads', express.static('uploads'));
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/product.routes')(app);
+require('./app/routes/warehouse.routes')(app);
 // require('./app/routes/hero.routes')(app);
 // require('./app/routes/skill.routes')(app);
 // require('./app/routes/map.routes')(app);
